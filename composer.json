@@ -1,0 +1,24 @@
+{
+    "name": "wex/image",
+    "description": "GD Wrapper",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niko Hujanen",
+            "email": "niko.hujanen@gmail.com"
+        }
+    ],
+    "require": {},
+    "config": {
+        "platform": {
+            "php": "7.1",
+            "ext-gd": "7.1"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Wex\\": "src/"
+        }
+    }
+}
