@@ -1,5 +1,8 @@
-# Image
-PHP7.1+ GD wrapper
+# Wex\Image
+GD wrapper
+
+# Installing
+`composer require nhujanen/image`
 
 # Requirements
 PHP 7.1+
@@ -7,10 +10,25 @@ ext-gd with JPEG & PNG
 
 # Supports
 - JPEG
--PNG
+- PNG
 
 # Provides
-
 - Resizing (contain / cover -modes)
 - Cropping (middle focus / free focus)
 - Rotating (with cropping)
+- Rect (with X2/Y2 -support)
+
+# Usage
+See `test/test.php`
+
+Basic usage example:
+```php
+// Load test.png
+$image = Wex\Image::load('test.png');
+
+// Resize to 300x200 (contained)
+$image->resize(300, 200);
+
+// Save image as JPEG
+$image->saveAs(Wex\Image\JPEG::class, "test_thumb.jpg");
+```
