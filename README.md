@@ -27,8 +27,8 @@ Basic usage example:
 $image = Wex\Image::load('test.png');
 
 // Resize to 300x200 (contained)
-$image->resize(300, 200);
+$thumb = $image->resize(300, 200);
 
 // Save image as JPEG
-$image->saveAs(Wex\Image\JPEG::class, "test_thumb.jpg");
+$thumb->saveAs(Wex\Image\JPEG::class, "test_thumb.jpg");
 ```
