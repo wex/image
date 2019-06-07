@@ -4,7 +4,7 @@ namespace Wex\Image;
 
 class GIF extends ImageAbstract implements FormatInterface
 {
-    public function save(string $filename, int $quality = -1): bool
+    public function save(string $filename = null, int $quality = -1): bool
     {
         return imagegif($this->res, $filename);
     }

@@ -11,7 +11,7 @@ abstract class ImageAbstract
     const       RESIZE_COVER    = 1;
     const       RESIZE_CROP     = 2;
 
-    protected   $res = null;
+    public      $res = null;
     protected   $_width;
     protected   $_height;
 

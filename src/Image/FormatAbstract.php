@@ -4,10 +4,12 @@ namespace Wex\Image;
 
 use Wex\Rect;
 use Wex\Drawing\Color\RGBA;
+use Wex\Drawing;
 
 abstract class FormatAbstract extends ImageAbstract implements FormatInterface
 {
-    protected   $_colors = [];
+    protected   $colors     = [];
+    protected   $drawing    = null;
 
     public function resize(int $width, int $height, int $method = self::RESIZE_CONTAIN, int $x = null, int $y = null): self
     {
@@ -130,10 +132,29 @@ abstract class FormatAbstract extends ImageAbstract implements FormatInterface
     {
         $hash = sprintf("%02X%02X%02X%02X", $r, $g, $b, $a);
 
-        if (!isset($this->_colors[$hash])) {
-            $this->_colors[$hash] = new RGBA($this, $r, $g, $b, $a);
+        if (!isset($this->colors[$hash])) {
+            $this->colors[$hash] = new RGBA($this, $r, $g, $b, $a);
         }
 
-        return $this->_colors[$hash];
+        return $this->colors[$hash];
+    }
+
+    public function render(): void
+    {
+        $imageType  = array_search(static::class, static::$formats);
+        $mimeType   = image_type_to_mime_type($imageType);
+
+        header("Content-Type: {$mimeType}");
+        $this->save();
+        exit;
+    }
+
+    public function draw(...$mixed)
+    {
+        if (null === $this->drawing) {
+            $this->drawing = new Drawing($this);
+        }
+
+        return $this->drawing->with(...$mixed);
     }
 }

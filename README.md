@@ -11,12 +11,17 @@ ext-gd with JPEG & PNG
 # Supports
 - JPEG
 - PNG
+- WEBP
+- GIF
 
 # Provides
 - Resizing (contain / cover -modes)
 - Cropping (middle focus / free focus)
 - Rotating (with cropping)
+- Mirroring (X&Y)
 - Rect (with X2/Y2 -support)
+- Colors
+- Drawing
 
 # Usage
 See `test/test.php`

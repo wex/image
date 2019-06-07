@@ -6,5 +6,5 @@ interface FormatInterface
 {
     public static function resourceFromFile(string $filename);
 
-    public function save(string $filename, int $quality = -1): bool;
+    public function save(string $filename = null, int $quality = -1): bool;
 }
