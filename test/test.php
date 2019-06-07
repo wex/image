@@ -16,3 +16,6 @@
 
     $thumb = $image->resize(160, 120);
     $thumb->saveAs(Image\PNG::class, 'resize.png');
+
+    $mirror = $image->mirror(true);
+    $mirror->saveAs(Image\WEBP::class, 'mirror.webp');

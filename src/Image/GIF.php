@@ -2,16 +2,15 @@
 
 namespace Wex\Image;
 
-class PNG extends ImageAbstract implements FormatInterface
+class GIF extends ImageAbstract implements FormatInterface
 {
     public function save(string $filename, int $quality = -1): bool
     {
-        imagesavealpha($this->res, true);
-        return imagepng($this->res, $filename, $quality);
+        return imagegif($this->res, $filename);
     }
 
     public static function resourceFromFile(string $filename)
     {
-        return imagecreatefrompng($filename);
+        return imagecreatefromgif($filename);
     }
 }

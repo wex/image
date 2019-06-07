@@ -1,4 +1,6 @@
+composer.lock
 vendor/
 test/crop.jpg
 test/rotate.jpg
 test/resize.png
+test/mirror.webp

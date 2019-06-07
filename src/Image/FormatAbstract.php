@@ -3,9 +3,12 @@
 namespace Wex\Image;
 
 use Wex\Rect;
+use Wex\Drawing\Color\RGBA;
 
 abstract class FormatAbstract extends ImageAbstract implements FormatInterface
 {
+    protected   $_colors = [];
+
     public function resize(int $width, int $height, int $method = self::RESIZE_CONTAIN, int $x = null, int $y = null): self
     {
         $target = new Rect;
@@ -78,6 +81,11 @@ abstract class FormatAbstract extends ImageAbstract implements FormatInterface
         return $this;
     }
 
+    public function copy(): self
+    {
+        return clone $this;
+    }
+
     public function crop(Rect $rect): self
     {
         return $this->resize($rect->w, $rect->h, self::RESIZE_CROP, $rect->x, $rect->y);
@@ -101,5 +109,31 @@ abstract class FormatAbstract extends ImageAbstract implements FormatInterface
         imagedestroy($resource);
 
         return $result;
+    }
+
+    public function mirror(bool $x = true, bool $y = false): self
+    {
+        $image = clone $this;
+        
+        if ($x && $y) {
+            imageflip($image->res, IMG_FLIP_BOTH);
+        } else if ($x) {
+            imageflip($image->res, IMG_FLIP_HORIZONTAL);
+        } else if ($y) {
+            imageflip($image->res, IMG_FLIP_VERTICAL);
+        }
+
+        return $image;
+    }
+
+    public function color($r, $g, $b, $a = 0)
+    {
+        $hash = sprintf("%02X%02X%02X%02X", $r, $g, $b, $a);
+
+        if (!isset($this->_colors[$hash])) {
+            $this->_colors[$hash] = new RGBA($this, $r, $g, $b, $a);
+        }
+
+        return $this->_colors[$hash];
     }
 }

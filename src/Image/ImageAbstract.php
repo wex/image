@@ -3,6 +3,7 @@
 namespace Wex\Image;
 
 use Wex\Rect;
+use Wex\Drawing\Color;
 
 abstract class ImageAbstract
 {
@@ -11,25 +12,27 @@ abstract class ImageAbstract
     const       RESIZE_CROP     = 2;
 
     protected   $res = null;
-    protected   $width;
-    protected   $height;
+    protected   $_width;
+    protected   $_height;
 
     static  $formats = [
         IMAGETYPE_JPEG  => JPEG::class,
-        IMAGETYPE_PNG   => PNG::class,        
+        IMAGETYPE_PNG   => PNG::class,      
+        IMAGETYPE_GIF   => GIF::class,
+        IMAGETYPE_WEBP  => WEBP::class,  
     ];
 
     public function __construct(int $width, int $height, $resource = null)
     {
-        $this->width    = $width;
-        $this->height   = $height;
+        $this->_width    = $width;
+        $this->_height   = $height;
 
         if (null === $resource) {
-            $this->res      = \imagecreatetruecolor($this->width, $this->height);
+            $this->res      = \imagecreatetruecolor($this->_width, $this->_height);
         } else {
             $this->res      = $resource;
-            $this->width    = imagesx($this->res);
-            $this->height   = imagesy($this->res);
+            $this->_width   = imagesx($this->res);
+            $this->_height  = imagesy($this->res);
         }
     }
 
@@ -54,7 +57,7 @@ abstract class ImageAbstract
 
     public function getRect(): Rect
     {
-        return new Rect(0, 0, $this->width, $this->height);
+        return new Rect(0, 0, $this->_width, $this->_height);
     }
 
     public function saveAs(string $foo, string $filename, int $quality = -1): bool
@@ -64,5 +67,18 @@ abstract class ImageAbstract
             throw new \InvalidArgumentException("Invalid Format: {$foo}");
 
         return $instance->save($filename, $quality);
+    }
+
+    public function createColor($r, int $g = 0, int $b = 0, int $a = 0): Color
+    {
+        return new Color($this, $r, $g, $b, $a);
+    }
+
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'width':   return $this->_width;
+            case 'height':  return $this->_height;
+        }
     }
 }

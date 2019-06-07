@@ -2,16 +2,15 @@
 
 namespace Wex\Image;
 
-class PNG extends ImageAbstract implements FormatInterface
+class WEBP extends ImageAbstract implements FormatInterface
 {
     public function save(string $filename, int $quality = -1): bool
     {
-        imagesavealpha($this->res, true);
-        return imagepng($this->res, $filename, $quality);
+        return imagewebp($this->res, $filename, ($quality >= 0) ? $quality : 80);
     }
 
     public static function resourceFromFile(string $filename)
     {
-        return imagecreatefrompng($filename);
+        return imagecreatefromwebp($filename);
     }
 }
